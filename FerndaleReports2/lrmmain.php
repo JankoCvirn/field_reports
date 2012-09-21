@@ -42,8 +42,10 @@ if (!session_is_registered($username)) {
 		$id=$_POST['material_id'];
 		$jobnr=$_POST['material_jobnr'];
 		$cost=$_POST['material_cost'];
+		$per=$_POST['material_per'];
+		$ext=$_POST['material_ext'];
 		//$cost= doubleval($cost);
-		$oUpdater->setMaterial($id,$jobnr,$cost);
+		$oUpdater->setMaterial($id,$jobnr,$cost,$ext,$per);
 	
 	}
 	
@@ -292,21 +294,7 @@ if (!session_is_registered($username)) {
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">User Management</li>
-              <li > <a href="user.php">User</a></li>
-              
-              
-              <li class="nav-header">Reports</li>
-              <li class="active"><a href="#">Labor&Material Field Report</a></li>
-              <li class="nav-header">Downloads</li>
-              <li><a href="apk/FerndaleForms2.apk">Mobile application</a></li>
-              <li class="nav-header">Main</li>
-              <li><a href="main.php">Home</a></li>
-              
-            </ul>
-          </div><!--/.well -->
+          <?php include 'nav/navigation.php'?>
         </div><!--/span-->
         <div class="span9">
 <!--           <div class="hero-unit"> -->
@@ -379,11 +367,11 @@ if (!session_is_registered($username)) {
 						<th>Id</th>
 						<th>JobNr</th>
 						<th>Worker</th>
-						<th>STime</th>
+						<th>S.T.</th>
 						<th>Rate</th>
-						<th>HTime</th>
+						<th>1½T.</th>
 						<th>Rate</th>
-						<th>DTime</th>
+						<th>2T.</th>
 						<th>Rate</th>
 						<th>Total</th>
 						<th>Created</th>
@@ -414,34 +402,43 @@ if (!session_is_registered($username)) {
 				</tbody>
 			</table>
             <p></p>
-            
+            <table>
             <form name="laborEdit" action="<?php echo($PHP_SELF)?>" method="post" >
 				<legend>Set worker time rates</legend>
 				
-				<label for="labor_id" style="color: blue;"> LaborID: </label> 
+				<tr>
+				<td><label for="labor_id" style="color: blue;"> LaborID: </label> 
 				<input
 				id="labor_id" value="" type="text" name="labor_id" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="labor_jobnr" style="color: blue;"> JobNr: </label> <input
 				id="labor_jobnr" value="" type="text" name="labor_jobnr" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="labor_worker" style="color: blue;"> Worker: </label> <input
 				id="password" value="" type="text" name="labor_worker" readonly="readonly" />
-				
-				<label for="labor_st" style="color: blue;"> ST rate: </label> <input
+				</td>
+				</tr>
+				<tr>
+				<td>
+				<label for="labor_st" style="color: blue;"> S. T. rate: </label> <input
 				id="labor_st" value="" type="text" name="labor_st" />
-				
-				<label for="labor_ht" style="color: blue;"> HT rate: </label> <input
+				</td>
+				<td>
+				<label for="labor_ht" style="color: blue;"> 1½ T. rate: </label> <input
 				id="labor_ht" value="" type="text" name="labor_ht" />
-				
-				
-				<label for="labor_dt" style="color: blue;"> DT rate: </label> <input
+				</td>
+				<td>
+				<label for="labor_dt" style="color: blue;"> 2 T. rate: </label> <input
 				id="labor_dt" value="" type="text" name="labor_dt" />
-				
-				<p></p>
+				</td>
+				</tr>
+				<tr><td>
 				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitLabor">Update Labor</button>
+				</td></tr>
 			</form>
-            
+            </table>
             
               
             </div><!--/span-->
@@ -459,7 +456,9 @@ if (!session_is_registered($username)) {
 						<th>JobNr</th>
 						<th>Material</th>
 						<th>Amount</th>
-						<th>Cost</th>
+						<th>Price</th>
+						<th>Per</th>
+						<th>Extension</th>
 						<th>Total</th>
 						
 			
@@ -467,6 +466,8 @@ if (!session_is_registered($username)) {
 				</thead>
 				<tbody>
 					<tr>
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -482,42 +483,61 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
+			<table>
 			<form name="materialEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<legend>Set material costs</legend>
-				
+				<tr><legend>Set material costs</legend>
+				</tr>
+				<tr>
+				<td>
 				<label for="material_id" style="color: blue;"> MaterialID: </label> 
 				<input
 				id="material_id" value="" type="text" name="material_id" readonly="readonly"  />
-				
+				</td>
+				<td>
 				<label for="material_jobnr" style="color: blue;"> JobNr: </label> <input
 				id="material_jobnr" value="" type="text" name="material_jobnr" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="material_name" style="color: blue;"> Material: </label> <input
 				id="password" value="" type="text" name="material_name" readonly="readonly" />
-				
-				<label for="material_cost" style="color: blue;"> Material Cost: </label> <input
+				</td>
+				</tr>
+				<tr><td>
+				<label for="material_cost" style="color: blue;"> Price: </label> <input
 				id="material_cost" value="" type="text" name="material_cost" />
-				
-				
-				
-				<p></p>
+				</td>
+				<td>
+				<label for="material_per" style="color: blue;"> PER: </label> <input
+				id="material_per" value="" type="text" name="material_per" />
+				</td>
+				<td>
+				<label for="material_ext" style="color: blue;"> EXTENSION: </label> <input
+				id="material_ext" value="" type="text" name="material_ext" />
+				</td>
+				</tr>
+				<tr>
+				<td>
 				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitMaterial">Update Material</button>
+				<td>
+				</tr>
 			</form>
-			
+			</table>
+			</div>
+			</div>
 			<!--Equipment table  -->
 			
 			<div class="row-fluid">
             <div class="span4">
-              <legend><p><span class="label label-important">Equipment details</span></p></legend>
+              <legend><p><span class="label label-important">Equipment Details</span></p></legend>
               <table id="equipment_table" class="display">
 				<thead>
 					<tr>
 						<th>Id</th>
 						<th>JobNr</th>
 						<th>Equipment</th>
+						<th>HRS.</th>
+						<th>Rate</th>
 						<th>Amount</th>
-						<th>Cost</th>
-						<th>Total</th>
 						
 						
 						
@@ -532,37 +552,39 @@ if (!session_is_registered($username)) {
 						<td></td>
 						<td></td>
 						<td></td>
-						
-						
-						
-						
-			
-					</tr>
+						</tr>
 			
 				</tbody>
 			</table>
+			<table>
 			<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<legend>Set equipment costs</legend>
-				
+				<tr><legend>Set equipment costs</legend></tr>
+				<tr>
+				<td>
 				<label for="eqp_id" style="color: blue;"> eqpID: </label> 
 				<input
 				id="eqp_id" value="" type="text" name="eqp_id" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="eqp_jobnr" style="color: blue;"> JobNr: </label> <input
 				id="eqp_jobnr" value="" type="text" name="eqp_jobnr" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="eqp_name" style="color: blue;"> Equipment: </label> <input
-				id="password" value="" type="text" name="eqp_name" readonly="readonly" />
-				
-				<label for="eqp_cost" style="color: blue;"> Equipment Cost: </label> <input
+				id="eqp_name" value="" type="text" name="eqp_name" readonly="readonly" />
+				</td>
+				</tr>
+				<tr>
+				<td>
+				<label for="eqp_cost" style="color: blue;"> Rate : </label> <input
 				id="eqp_cost" value="" type="text" name="eqp_cost" />
-				
-				
-				
-				<p></p>
-				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitEqp">Update Equipment</button>
+				</td>
+				</tr>
+				<tr><td><button type="submit" class="btn btn-success"  value="Submit"  name="SubmitEqp">Update Equipment</button>
+				</td>
+				</tr>
 			</form>
-              
+            </table>  
             </div><!--/span-->
             
           </div><!--/row-->
@@ -579,8 +601,8 @@ if (!session_is_registered($username)) {
 						<th>Id</th>
 						<th>JobNr</th>
 						<th>SubContractor</th>
-						<th>Amount</th>
-						<th>Cost</th>
+						<th>HRS.</th>
+						<th>Rate</th>
 						<th>Total</th>
 						
 						
@@ -605,29 +627,35 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-			
-			<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<legend>Set equipment costs</legend>
-				
+			<table>
+				<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<tr><legend>Set SubContractor costs</legend>
+				</tr>
+				<tr>
+				<td>
 				<label for="sub_id" style="color: blue;"> SubID: </label> 
 				<input
 				id="sub_id" value="" type="text" name="sub_id" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="sub_jobnr" style="color: blue;"> JobNr: </label> <input
 				id="sub_jobnr" value="" type="text" name="sub_jobnr" readonly="readonly" />
-				
+				</td>
+				<td>
 				<label for="sub_name" style="color: blue;"> SubContractor: </label> <input
-				id="password" value="" type="text" name="sub_name" readonly="readonly" />
-				
+				id="sub_name" value="" type="text" name="sub_name" readonly="readonly" />
+				</td>
+				</tr>
+				<tr><td>
 				<label for="sub_cost" style="color: blue;"> SubContractor Cost: </label> <input
 				id="sub_cost" value="" type="text" name="sub_cost" />
-				
-				
-				
-				<p></p>
+				</td>
+				</tr>
+				<tr><td>
 				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitSub">Update SubContractor</button>
+				</td></tr>
 			</form>
-			
+			</table>		
               
             </div><!--/span-->
             

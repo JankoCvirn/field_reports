@@ -27,11 +27,10 @@ class lmr_update
 		 }
 	}
 	
-	public function setMaterial($id,$jobnr,$cost){
-		
+	public function setMaterial($id,$jobnr,$cost,$ext,$per){
 		$this->oSql=new Sql($this->db);
 		$this->oSql->setErrorhandling(true, true);
-		$this->sSql="UPDATE flm_report_sub_material SET rate='".$cost."'  WHERE id='".$id."' AND job_nr='".$jobnr."' ";
+		$this->sSql="UPDATE flm_report_sub_material SET rate='".$cost."',per='".$per."',extension='".$ext."'  WHERE id='".$id."' AND job_nr='".$jobnr."' ";
 		$this->oSql->q($this->sSql);
 	}
 	
