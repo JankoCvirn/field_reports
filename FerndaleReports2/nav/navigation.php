@@ -12,7 +12,8 @@
               <li ><a href="">Labor&Material Field Report</a></li>
               <li class="nav-header">Downloads</li>
               <li><a href="apk/FerndaleForms2.apk">Mobile application</a></li>
-              
+              <li class="nav-header">Database</li>
+              <li><a href="phpmyadmin/index.php">Database administration</a></li>
               
             </ul>
 </div>

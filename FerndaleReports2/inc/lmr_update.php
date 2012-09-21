@@ -3,11 +3,34 @@ require_once("php/Sql.php");
 
 class lmr_update
 {
+	public $oSql;
+	public $sSql;
+	
 	public function __construct($uid){
 		
 		$this->db="apps_forms";
 	
 	}
+	
+	public function setReport($jobnr,$tax,$over){
+	
+		try{
+			
+			$this->oSql=new Sql($this->db);
+			$this->oSql->setErrorhandling(true, true);
+			$this->sSql="UPDATE flm_report
+			SET sales_tax='".$tax."',overhead_profit='".$over."'
+			WHERE job_number='".$jobnr."' ";
+			$this->oSql->q($this->sSql);
+			return true;
+		}
+		catch (Exception $e){
+	
+			return false;
+		}
+	}
+	
+	
 	
 	public function setLabor($id,$jobnr,$st,$ht,$dt){
 		

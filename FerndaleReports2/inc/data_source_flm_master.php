@@ -4,7 +4,7 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id','customer','date','job_number','job_name','job_location','fec_project_manager','customer_order_no','work_performed','work_complete' );
+	$aColumns = array( 'id','customer','date','job_number','job_name','job_location','fec_project_manager','customer_order_no','work_performed','work_complete','sales_tax','overhead_profit' );
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";

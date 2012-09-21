@@ -69,16 +69,6 @@ if (!session_is_registered($username)) {
 		$oUpdater->setSub($id,$jobnr,$cost);
 	}
 	
-	if (isset($_POST["SubmitReportDetails"])){
-		
-		$oUpdater=new lmr_update('none');
-		$jobnr=$_POST['report_jobn'];
-		$tax=$_POST['sales_tax'];
-		$over=$_POST['overhead_profit'];
-		$oUpdater->setReport($jobnr, $tax, $over);
-		
-	}
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -331,16 +321,13 @@ if (!session_is_registered($username)) {
 						<th>CustomerOrd.Nr.</th>
 						<th>Work performed</th>
 						<th>Work complete</th>
-						<th>Sales Tax</th>
-						<th>Overhead & Profit</th>
+						
 						
 			
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td></td>
-						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -359,34 +346,16 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-			<table>
 			<form name="reportEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-			<tr><legend><span class="label label-info">Field Report Details Section for JobNumber:</span></legend>
-			</tr>
-			<tr><td>
-			<label for="report_jobn" style="color: blue;"> Job Number: </label>
-			<input id="report_jobn" value="" type="text" name="report_jobn" readonly="readonly"  />
-			</td>
-			</tr>
-			<!--Inputs  -->
-			<tr><td>
-			<label for="sales_tax" style="color: blue;"> Sales TAX </label> <input
-				id="sales_tax" value="" type="text" name="sales_tax" />
-			</td>
-			<td>
-			<label for="overhead_profit" style="color: blue;">Overhead&Profit </label> <input
-				id="overhead_profit" value="" type="text" name="overhead_profit" />
-				</td>
-			</tr>
-			<!--Button  -->
-			<tr><td>
-			<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitReportDetails">Update Report</button>
-			</td>	
-			</tr>
+			<br>
+			<div class="well well-small">
+			<legend><span class="label label-info">Field Report Details Section for JobNumber:</span></legend>
+			<input
+			id="report_jobn" value="" type="text" name="report_jobn" readonly="readonly"  />
+			
 			
 			</form>
-			</table>
-			</br>
+			
             </div><!--/span-->
             
           </div><!--/row-->

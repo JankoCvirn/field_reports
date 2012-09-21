@@ -89,8 +89,8 @@ if (isset($_POST['btnLogin'])){
             <h1></h1>
             <p>
             <form method="post" action="<?php echo($PHP_SELF)?>">
-            <label>Username:</label><input name="username"  />
-            <label>Password:</label><input name="password" /><p></p>
+            <label>Username:</label><input name="username" type="text" />
+            <label>Password:</label><input name="password" type="password"/><p></p>
             <button type="submit" name="btnLogin" class="btn btn-primary btn-large">Login</button>
             </form>
             

@@ -152,22 +152,7 @@ if (isset($_POST['SubmitChange'])){
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">User Management</li>
-              <li class="active"><a href="#">User</a></li>
-              
-              
-              
-              <li class="nav-header">Reports</li>
-              <li><a href="lrmmain.php">Labor&Material Field Report</a></li>
-              <li class="nav-header">Downloads</li>
-              <li><a href="apk/FerndaleForms2.apk">Mobile application</a></li>
-              <li class="nav-header">Main</li>
-              <li><a href="main.php">Home</a></li>
-              
-            </ul>
-          </div><!--/.well -->
+          <?php include 'nav/navigation.php'?>
         </div><!--/span-->
         <div class="span9">
          
