@@ -1,6 +1,7 @@
 <?php
 ini_set("session.gc_maxlifetime", "3600");
 require_once  ("inc/utils.php");
+require 'inc/lmr_update.php';
 
 
 session_start();
@@ -18,6 +19,54 @@ if (isset($_REQUEST["logout"])){
 if (!session_is_registered($username)) {
 	header("Location:index.php");}
 
+	/////////////////////////////////////
+	///Data update section
+	
+	//Labor data
+	if (isset($_POST["SubmitLabor"])){
+		$oUpdater=new lmr_update();
+		
+		$id=$_POST['labor_id'];
+		$jobnr=$_POST['labor_jobnr'];
+		$st=$_POST['labor_st'];
+		$ht=$_POST['labor_ht'];
+		$dt=$_POST['labor_dt'];
+		$oUpdater->setLabor($id,$jobnr,$st,$ht,$dt);
+		
+	}
+	
+	//Material data
+	if (isset($_POST["SubmitMaterial"])){
+		$oUpdater=new lmr_update();
+		
+		$id=$_POST['material_id'];
+		$jobnr=$_POST['material_jobnr'];
+		$cost=$_POST['material_cost'];
+		//$cost= doubleval($cost);
+		$oUpdater->setMaterial($id,$jobnr,$cost);
+	
+	}
+	
+	//Equipment data
+	if (isset($_POST["SubmitEqp"])){
+		$oUpdater=new lmr_update();
+		$id=$_POST['eqp_id'];
+		$jobnr=$_POST['eqp_jobnr'];
+		$cost=$_POST['eqp_cost'];
+		//$cost= doubleval($cost);
+		$oUpdater->setEqp($id,$jobnr,$cost);
+	}
+	
+	//SubCon data
+	if (isset($_POST["SubmitSub"])){
+		$oUpdater=new lmr_update();
+		$id=$_POST['sub_id'];
+		$jobnr=$_POST['sub_jobnr'];
+		$cost=$_POST['sub_cost'];
+		//$cost= doubleval($cost);
+		$oUpdater->setSub($id,$jobnr,$cost);
+	}
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,8 +110,13 @@ if (!session_is_registered($username)) {
         	$('#master_table').dataTable( {
         		"bProcessing": true,
         		"bServerSide": true,
+        		
         		"sAjaxSource": "inc/data_source_flm_master.php",
-        		"aaSorting": [[ 4, "asc" ]]
+        		"aaSorting": [[ 4, "asc" ]],
+        		"bJQueryUI": true,
+                "bStateSave": true,
+                "bAutoWidth": false,
+                
         		} 
 				
 
@@ -76,52 +130,129 @@ if (!session_is_registered($username)) {
 
         	
 
-        	$('#labor_table').dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		"sAjaxSource": "inc/data_source_flm_labor.php"
-        	} ); 
-        	$('#material_table').dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		"sAjaxSource": "inc/data_source_flm_mat.php"
-        	} ); 
-        	$('#equipment_table').dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		"sAjaxSource": "inc/data_source_flm_equip.php"
-        	} ); 
-        	$('#subcon_table').dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		"sAjaxSource": "inc/data_source_flm_subcon.php"
-        	} ); 
+        	
         	
         	  
                 
             } );
 
-		$('#user_table tbody tr').live('click', function () {
-            
+		
+		$('#master_table tbody tr').live('click', function () {
+			
             var nTds = $('td', this);
-            var id = $(nTds[0]).text();
-            var username = $(nTds[1]).text();
-            var userpass= $(nTds[2]).text();
-            var userfname = $(nTds[3]).text();
-            var userlname = $(nTds[4]).text(); 
-
-            oFormObject = document.forms['userEdit'];
-            oFormObject.elements["edit_id"].value = id;
-            oFormObject.elements["edit_pass"].value = userpass;
-            oFormObject.elements["edit_name"].value = username;
-            oFormObject.elements["edit_fname"].value = userfname;
-            oFormObject.elements["edit_lname"].value = userlname;
+            var jobnr = $(nTds[3]).text();
+            var dataString = 'job_nr='+jobnr;
             
+            oFormObject = document.forms['reportEdit'];
+            oFormObject.elements["report_jobn"].value = jobnr;
 
+            $('#labor_table').dataTable( {
+            	"bDestroy":true,
+                "bServerSide": true,
+                "bRegex":false,
+                "sAjaxSource": "inc/data_source_flm_labor.php",
+                "oSearch": {"sSearch": jobnr}
+                
+              } );
+
+            $('#material_table').dataTable( {
+            	"bDestroy":true,
+                "bServerSide": true,
+                "bRegex":false,
+                "sAjaxSource": "inc/data_source_flm_mat.php",
+                "oSearch": {"sSearch": jobnr}
+                
+              } );
+            $('#equipment_table').dataTable( {
+            	"bDestroy":true,
+                "bServerSide": true,
+                "bRegex":false,
+                "sAjaxSource": "inc/data_source_flm_equip.php",
+                "oSearch": {"sSearch": jobnr}
+                
+              } );
+            $('#subcontractor_table').dataTable( {
+            	"bDestroy":true,
+                "bServerSide": true,
+                "bRegex":false,
+                "sAjaxSource": "inc/data_source_flm_subcon.php",
+                "oSearch": {"sSearch": jobnr}
+                
+              } );
+
+			
             
             
             
         } );
+		//Labor edit form 
+		$('#labor_table tbody tr').live('click', function () {
+
+			//get data
+			var nTds = $('td', this);
+			var id=$(nTds[0]).text();
+		    var jobnr = $(nTds[1]).text();
+			var workername=$(nTds[2]).text();
+	        
+
+            //show data
+            oFormObject = document.forms['laborEdit'];
+            oFormObject.elements["labor_id"].value = id;
+            oFormObject.elements["labor_jobnr"].value = jobnr;
+            oFormObject.elements["labor_worker"].value = workername;
+
+			});
+		//Material edit form
+		$('#material_table tbody tr').live('click', function () {
+
+			//get data
+			var nTds = $('td', this);
+			var id=$(nTds[0]).text();
+		    var jobnr = $(nTds[1]).text();
+			var matname=$(nTds[2]).text();
+	        
+
+            //show data
+            oFormObject = document.forms['materialEdit'];
+            oFormObject.elements["material_id"].value = id;
+            oFormObject.elements["material_jobnr"].value = jobnr;
+            oFormObject.elements["material_name"].value = matname;
+
+			});
+		//Equipment edit form
+		$('#equipment_table tbody tr').live('click', function () {
+
+			//get data
+			var nTds = $('td', this);
+			var id=$(nTds[0]).text();
+		    var jobnr = $(nTds[1]).text();
+			var eqpname=$(nTds[2]).text();
+	        
+
+            //show data
+            oFormObject = document.forms['eqpEdit'];
+            oFormObject.elements["eqp_id"].value = id;
+            oFormObject.elements["eqp_jobnr"].value = jobnr;
+            oFormObject.elements["eqp_name"].value = eqpname;
+
+			});
+		//SubContractor edit
+		$('#subcontractor_table tbody tr').live('click', function () {
+
+			//get data
+			var nTds = $('td', this);
+			var id=$(nTds[0]).text();
+		    var jobnr = $(nTds[1]).text();
+			var subname=$(nTds[2]).text();
+	        
+
+            //show data
+            oFormObject = document.forms['subEdit'];
+            oFormObject.elements["sub_id"].value = id;
+            oFormObject.elements["sub_jobnr"].value = jobnr;
+            oFormObject.elements["sub_name"].value = subname;
+
+			});
 
 		
         	
@@ -178,23 +309,24 @@ if (!session_is_registered($username)) {
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-          <div class="hero-unit">
+<!--           <div class="hero-unit"> -->
             
-            <h2>Labor&Material Field Reports</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              </div>
-          <div class="row-fluid">
+<!--             <h2>Labor&Material Field Reports</h2> -->
+<!--               <p> </p> -->
+<!--               </div> -->
+
+<div class="row-fluid"> 
             <div class="span9">
               <p><strong>REPORTS OVERVIEW:</strong></p>
               <table id="master_table" class="display">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Customer</th>
-						<th>Job Date</th>
-						<th>JobNumber</th>
-						<th>JobName</th>
-						<th>JobLocation</th>
+						<th>SystemId</th>
+						<th>Customer </th>
+						<th>Job Date </th>
+						<th>Job Number </th>
+						<th>Job Name</th>
+						<th>Job Location</th>
 						
 						<th>Fec Manager</th>
 						<th>CustomerOrd.Nr.</th>
@@ -225,14 +357,22 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-            <p id="JobNumberFilter"></p>
-            <p id="CustomerNameFilter"></p>
+			<form name="reportEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+			<br>
+			<div class="well well-small">
+			<legend><span class="label label-info">Field Report Details Section for JobNumber:</span></legend>
+			<input
+			id="report_jobn" value="" type="text" name="report_jobn" readonly="readonly"  />
+			
+			
+			</form>
+			
             </div><!--/span-->
             
           </div><!--/row-->
           <div class="row-fluid">
             <div class="span4">
-              <p><strong>LABOR OVERVIEW:</strong></p>
+              <p><span class="label label-important">Labor Details</span></p>
               <table id="labor_table" class="display">
 				<thead>
 					<tr>
@@ -240,8 +380,12 @@ if (!session_is_registered($username)) {
 						<th>JobNr</th>
 						<th>Worker</th>
 						<th>STime</th>
+						<th>Rate</th>
 						<th>HTime</th>
+						<th>Rate</th>
 						<th>DTime</th>
+						<th>Rate</th>
+						<th>Total</th>
 						<th>Created</th>
 						
 						
@@ -257,7 +401,10 @@ if (!session_is_registered($username)) {
 						<td></td>
 						<td></td>
 						<td></td>
-						
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 						
 						
 						
@@ -266,6 +413,36 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
+            <p></p>
+            
+            <form name="laborEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<legend>Set worker time rates</legend>
+				
+				<label for="labor_id" style="color: blue;"> LaborID: </label> 
+				<input
+				id="labor_id" value="" type="text" name="labor_id" readonly="readonly" />
+				
+				<label for="labor_jobnr" style="color: blue;"> JobNr: </label> <input
+				id="labor_jobnr" value="" type="text" name="labor_jobnr" readonly="readonly" />
+				
+				<label for="labor_worker" style="color: blue;"> Worker: </label> <input
+				id="password" value="" type="text" name="labor_worker" readonly="readonly" />
+				
+				<label for="labor_st" style="color: blue;"> ST rate: </label> <input
+				id="labor_st" value="" type="text" name="labor_st" />
+				
+				<label for="labor_ht" style="color: blue;"> HT rate: </label> <input
+				id="labor_ht" value="" type="text" name="labor_ht" />
+				
+				
+				<label for="labor_dt" style="color: blue;"> DT rate: </label> <input
+				id="labor_dt" value="" type="text" name="labor_dt" />
+				
+				<p></p>
+				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitLabor">Update Labor</button>
+			</form>
+            
+            
               
             </div><!--/span-->
             
@@ -274,7 +451,7 @@ if (!session_is_registered($username)) {
         <!--Material  -->
         <div class="row-fluid">
             <div class="span4">
-              <p><strong>MATERIAL OVERVIEW:</strong></p>
+              <legend><p><span class="label label-important">Material Details</span></p></legend>
               <table id="material_table" class="display">
 				<thead>
 					<tr>
@@ -282,7 +459,8 @@ if (!session_is_registered($username)) {
 						<th>JobNr</th>
 						<th>Material</th>
 						<th>Amount</th>
-						
+						<th>Cost</th>
+						<th>Total</th>
 						
 			
 					</tr>
@@ -293,7 +471,8 @@ if (!session_is_registered($username)) {
 						<td></td>
 						<td></td>
 						<td></td>
-						
+						<td></td>
+						<td></td>
 						
 						
 						
@@ -303,12 +482,33 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
+			<form name="materialEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<legend>Set material costs</legend>
+				
+				<label for="material_id" style="color: blue;"> MaterialID: </label> 
+				<input
+				id="material_id" value="" type="text" name="material_id" readonly="readonly"  />
+				
+				<label for="material_jobnr" style="color: blue;"> JobNr: </label> <input
+				id="material_jobnr" value="" type="text" name="material_jobnr" readonly="readonly" />
+				
+				<label for="material_name" style="color: blue;"> Material: </label> <input
+				id="password" value="" type="text" name="material_name" readonly="readonly" />
+				
+				<label for="material_cost" style="color: blue;"> Material Cost: </label> <input
+				id="material_cost" value="" type="text" name="material_cost" />
+				
+				
+				
+				<p></p>
+				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitMaterial">Update Material</button>
+			</form>
 			
 			<!--Equipment table  -->
 			
 			<div class="row-fluid">
             <div class="span4">
-              <p><strong>EQUIPMENT OVERVIEW:</strong></p>
+              <legend><p><span class="label label-important">Equipment details</span></p></legend>
               <table id="equipment_table" class="display">
 				<thead>
 					<tr>
@@ -316,6 +516,8 @@ if (!session_is_registered($username)) {
 						<th>JobNr</th>
 						<th>Equipment</th>
 						<th>Amount</th>
+						<th>Cost</th>
+						<th>Total</th>
 						
 						
 						
@@ -328,7 +530,8 @@ if (!session_is_registered($username)) {
 						<td></td>
 						<td></td>
 						<td></td>
-						
+						<td></td>
+						<td></td>
 						
 						
 						
@@ -338,6 +541,27 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
+			<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<legend>Set equipment costs</legend>
+				
+				<label for="eqp_id" style="color: blue;"> eqpID: </label> 
+				<input
+				id="eqp_id" value="" type="text" name="eqp_id" readonly="readonly" />
+				
+				<label for="eqp_jobnr" style="color: blue;"> JobNr: </label> <input
+				id="eqp_jobnr" value="" type="text" name="eqp_jobnr" readonly="readonly" />
+				
+				<label for="eqp_name" style="color: blue;"> Equipment: </label> <input
+				id="password" value="" type="text" name="eqp_name" readonly="readonly" />
+				
+				<label for="eqp_cost" style="color: blue;"> Equipment Cost: </label> <input
+				id="eqp_cost" value="" type="text" name="eqp_cost" />
+				
+				
+				
+				<p></p>
+				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitEqp">Update Equipment</button>
+			</form>
               
             </div><!--/span-->
             
@@ -347,14 +571,17 @@ if (!session_is_registered($username)) {
           
           <div class="row-fluid">
             <div class="span4">
-              <p><strong>SUBCONTRACTOR OVERVIEW:</strong></p>
-              <table id="equipment_table" class="display">
+            <p></p>
+              <legend><p><span class="label label-important">SubContractor Details</span></p></legend>
+              <table id="subcontractor_table" class="display">
 				<thead>
 					<tr>
 						<th>Id</th>
 						<th>JobNr</th>
 						<th>SubContractor</th>
 						<th>Amount</th>
+						<th>Cost</th>
+						<th>Total</th>
 						
 						
 						
@@ -367,7 +594,8 @@ if (!session_is_registered($username)) {
 						<td></td>
 						<td></td>
 						<td></td>
-						
+						<td></td>
+						<td></td>
 						
 						
 						
@@ -377,16 +605,39 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
+			
+			<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<legend>Set equipment costs</legend>
+				
+				<label for="sub_id" style="color: blue;"> SubID: </label> 
+				<input
+				id="sub_id" value="" type="text" name="sub_id" readonly="readonly" />
+				
+				<label for="sub_jobnr" style="color: blue;"> JobNr: </label> <input
+				id="sub_jobnr" value="" type="text" name="sub_jobnr" readonly="readonly" />
+				
+				<label for="sub_name" style="color: blue;"> SubContractor: </label> <input
+				id="password" value="" type="text" name="sub_name" readonly="readonly" />
+				
+				<label for="sub_cost" style="color: blue;"> SubContractor Cost: </label> <input
+				id="sub_cost" value="" type="text" name="sub_cost" />
+				
+				
+				
+				<p></p>
+				<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitSub">Update SubContractor</button>
+			</form>
+			
               
             </div><!--/span-->
             
           </div><!--/row-->
-              
+               
             </div><!--/span-->
-            
+            </div>
           </div><!--/row-->  
           
-          
+         
           
         </div><!--/span-->
       </div><!--/row-->

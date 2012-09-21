@@ -17,10 +17,7 @@ if (isset($_REQUEST["logout"])){
 //back to index.html
 if (!session_is_registered($username)) {
 	header("Location:index.php");}
-	
 
-	
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,15 +80,13 @@ if (!session_is_registered($username)) {
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">User Management</li>
-              <li><a href="user.php">User</a></li>
+              <li class="active"> <a href="user.php">User</a></li>
               
               
               <li class="nav-header">Reports</li>
               <li><a href="lrmmain.php">Labor&Material Field Report</a></li>
               <li class="nav-header">Downloads</li>
               <li><a href="apk/FerndaleForms2.apk">Mobile application</a></li>
-              <li class="nav-header">Database</li>
-              <li><a href="phpmyadmin/index.php">Database administration</a></li>
               <li class="nav-header">Main</li>
               <li><a href="main.php">Home</a></li>
               
@@ -102,19 +97,20 @@ if (!session_is_registered($username)) {
           <div class="hero-unit">
             
             <p>Ferndale Electric eReports</p>
-            
+            <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           </div>
           <div class="row-fluid">
-            
+            <div class="span4">
               <h2>How To use this application</h2>
-              <p>1.Download and install the AndroidOS application.Just click on the link in the left menu.</p>
-              <p>2.Create a new username/password in the User Management section and be sure its marked as Active.</p>
-              <p><span class="label label-important">Important</span>3.Enter your credentials in the mobile application.This information is persistant on the device.</p>
-              <p>4.In order to publish the data to the server please make sure you have mobile data enebled.</p>
-            
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p></p>
+            </div><!--/span-->
             
           </div><!--/row-->
-          
+          <div class="row-fluid">
+            <
+            
+          </div><!--/row-->
         </div><!--/span-->
       </div><!--/row-->
 
@@ -129,8 +125,8 @@ if (!session_is_registered($username)) {
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.1.js"></script>
-<!--    <script src="js/bootstrap-transition.js"></script>-->
-<!--    <script src="js/bootstrap-alert.js"></script>-->
+    <script src="js/bootstrap-transition.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
     <script src="js/bootstrap-modal.js"></script>
     <script src="js/bootstrap-dropdown.js"></script>
     <script src="js/bootstrap-scrollspy.js"></script>

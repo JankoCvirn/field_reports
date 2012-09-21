@@ -4,7 +4,7 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id','job_nr','name','amount','created','updated' );
+	$aColumns = array( 'id','job_nr','name','amount','rate','total','created','updated' );
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
@@ -78,12 +78,9 @@
 	if ( $_GET['sSearch'] != "" )
 	{
 		$sWhere = "WHERE (";
-		for ( $i=0 ; $i<count($aColumns) ; $i++ )
-		{
-			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
-		}
-		$sWhere = substr_replace( $sWhere, "", -3 );
-		$sWhere .= ')';
+		
+		
+			$sWhere .= $aColumns[1]." = '".mysql_real_escape_string( $_GET['sSearch'] )."' ) ";
 	}
 	
 	/* Individual column filtering */

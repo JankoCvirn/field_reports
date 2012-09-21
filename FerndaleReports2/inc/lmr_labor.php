@@ -21,7 +21,7 @@ class lmr_labor
 		 $created=time();
 		 $this->oSql=new Sql($this->db);
 		 $this->oSql->setErrorhandling(true, true);
-		 $this->sSql="INSERT INTO flm_report_sub_labor (job_nr,name,stime,htime,dtime,created)
+		 $this->sSql="INSERT IGNORE INTO flm_report_sub_labor (job_nr,name,stime,htime,dtime,created)
 				             VALUES('".$jnr."',
 				             	    '".$w."',
 				             	    '".$st."',

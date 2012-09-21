@@ -4,7 +4,7 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id','job_nr','name','stime','htime','dtime','created','updated' );
+	$aColumns = array( 'id','job_nr','name','stime','st_rate','htime','ht_rate','dtime','dt_rate','total' ,'created','updated');
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
@@ -78,13 +78,11 @@
 	if ( $_GET['sSearch'] != "" )
 	{
 		$sWhere = "WHERE (";
-		for ( $i=0 ; $i<count($aColumns) ; $i++ )
-		{
-			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+		
+		
+			$sWhere .= $aColumns[1]." = '".mysql_real_escape_string( $_GET['sSearch'] )."' ) ";
+		
 		}
-		$sWhere = substr_replace( $sWhere, "", -3 );
-		$sWhere .= ')';
-	}
 	
 	/* Individual column filtering */
 	for ( $i=0 ; $i<count($aColumns) ; $i++ )
@@ -99,7 +97,7 @@
 			{
 				$sWhere .= " AND ";
 			}
-			$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+			$sWhere .= $aColumns[$i]." = '".mysql_real_escape_string($_GET['sSearch_'.$i])."' ";
 		}
 	}
 	

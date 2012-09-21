@@ -170,19 +170,27 @@ if (isset($_POST['SubmitChange'])){
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-         
-          
+         <!--   <div class="hero-unit">
+            
+            <p>Ferndale Electric eReports</p>
+            <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          </div>-->
+          <div class="row-fluid">
+            <div class="span1">
+              <h2>User management</h2>
+              <p></p>
+            </div><!--/span-->
+            
+          </div><!--/row-->
           <div class="row-fluid">
           <div class="span4">
            <div id="container">
+<p></p>
 
-
-
-
+<p><h2>Create new user</h2></p>
+<br>
 <div style="color: blue;"><?php echo $msg_status;?></div>
-<form action="<?php echo($PHP_SELF)?>" method="POST">
-<legend>Create a new user</legend>
-<label
+<form action="<?php echo($PHP_SELF)?>" method="POST"><label
 	for="username" style="color: blue;"> Username: </label> <input
 	id="username" value="*" type="text" name="user" />
 <div id="reg_username_a"></div>
@@ -198,14 +206,15 @@ if (isset($_POST['SubmitChange'])){
 <label for="lname" style="color: blue;"> Last Name: </label> <input
 	id="lname" value="" type="text" name="lname" />
 <p></p>
-<button type="submit" value="New User" name="SubmitNewUser" class="btn btn-success">Create</button>
+<input type="submit" value="New User" name="SubmitNewUser" />
 </form>
 </div><!--/row-->
 </div>
 <div class="span4">
-
+<p></p>
+<h2>Modify a user</h2>
+<p></p>
 <form name="userEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-	<legend>Modify a user profile</legend>
 	<label for="edit_id" style="color: blue;"> UserID: </label> <input
 	id="edit_id" value="" type="text" name="edit_id" />
 	<label for="edit_name" style="color: blue;"> Username: </label> <input
@@ -221,7 +230,7 @@ if (isset($_POST['SubmitChange'])){
 	     <option value="0">No</option>
 	    </select>
 	<p></p>
-	<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitChange">Update User</button>
+	<input type="submit"  value="Submit"  name="SubmitChange"/>
 	
 	
 	
@@ -270,8 +279,7 @@ if (isset($_POST['SubmitChange'])){
 <div class="row-fluid">
 <div class="span8">
 <p></p>
-<p class="lead">System Users</p>
-<p class="small">*click on a user to modify a profile</p>
+<p><h2>Users</h2></p>
 <table id="user_table" class="display">
 	<thead>
 		<tr>
@@ -280,7 +288,7 @@ if (isset($_POST['SubmitChange'])){
 			<th>Password</th>
 			<th>First Name</th>
 			<th>Last Name</th>
-			<th>Active (1-on , 0-off)</th>
+			<th>Active</th>
 			
 			
 

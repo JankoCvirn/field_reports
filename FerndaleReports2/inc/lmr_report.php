@@ -43,7 +43,7 @@ class lmr_report
 		 try{
 		 $this->oSql=new Sql($this->db);
 		 $this->oSql->setErrorhandling(true, true);
-		 $this->sSql="INSERT INTO flm_report (customer,date,job_number,job_name,job_location,fec_project_manager,customer_order_no,work_performed)
+		 $this->sSql="INSERT IGNORE INTO flm_report (customer,date,job_number,job_name,job_location,fec_project_manager,customer_order_no,work_performed)
 				             VALUES('".$this->customer."',
 				                    '".$this->date."',
 				                    '".$this->jobnumber."',
