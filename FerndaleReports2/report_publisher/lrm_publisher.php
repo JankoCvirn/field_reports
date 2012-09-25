@@ -6,6 +6,7 @@ setlocale(LC_MONETARY, 'en_US');
 
 session_start();
 
+
 $msg_status='';
 
 $username=$_SESSION['username'];
@@ -36,9 +37,12 @@ if (!session_is_registered($username)) {
 	///5.SubContractor
 
 if (isset($_POST['SubmitReportCreate'])){
-	
+	ob_start();
 	$job_number=$_POST['job_number'];
 	$job_number=trim($job_number);
+	
+	
+	
 	////////////////////////////////////
 	//Section 2-5
 	
@@ -150,7 +154,8 @@ if (isset($_POST['SubmitReportCreate'])){
 		mysql_close($db_handle);
 	}
 	
-	
+	//$content=ob_get_contents();
+	//file_put_contents("test.html", $content);
 	
 	
 }	
@@ -219,12 +224,33 @@ if (isset($_POST['SubmitReportCreate'])){
 	src="../datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 
+function publish(){
+
+    $.ajax({
+       type: 'POST',
+       url: '	test.php',
+       data: {
+           html: $('body').html()
+       }
+    });        
+	}
+
         </script>
-    
+    <script src="../js/bootstrap-alert.js"></script>
+    <script src="../js/bootstrap-modal.js"></script>
+    <script src="../js/bootstrap-dropdown.js"></script>
+    <script src="../js/bootstrap-scrollspy.js"></script>
+    <script src="../js/bootstrap-tab.js"></script>
+    <script src="../js/bootstrap-tooltip.js"></script>
+    <script src="../js/bootstrap-popover.js"></script>
+    <script src="../js/bootstrap-button.js"></script>
+    <script src="../js/bootstrap-collapse.js"></script>
+    <script src="../js/bootstrap-carousel.js"></script>
+    <script src="../js/bootstrap-typeahead.js"></script>
     
     
   </head>
-
+  
   <body>
 
     <div class="navbar navbar-fixed-top">
@@ -278,7 +304,7 @@ if (isset($_POST['SubmitReportCreate'])){
             <button type="submit" class="btn btn-success"  value="Create Report"  name="SubmitReportCreate">Create Report</button>
 			
             </form>
-              
+            
 			Selected Job Number: <?php echo $job_number;?>
             </div>
             
@@ -575,7 +601,10 @@ if (isset($_POST['SubmitReportCreate'])){
             
             
             </table>
-           
+            <button id="publish" type="submit" class="btn btn-success"  value="Publish Report"  name="SubmitReportPublish" onclick="publish()">Publish Report</button>
+			<p>
+			 <a href="../report_publisher/testfile.pdf">View PDF</a>
+			
             </div><!--/span-->
             
           </div><!--/row-->
@@ -626,17 +655,7 @@ if (isset($_POST['SubmitReportCreate'])){
     <!-- Placed at the end of the document so the pages load faster -->
     
     
-    <script src="../js/bootstrap-alert.js"></script>
-    <script src="../js/bootstrap-modal.js"></script>
-    <script src="../js/bootstrap-dropdown.js"></script>
-    <script src="../js/bootstrap-scrollspy.js"></script>
-    <script src="../js/bootstrap-tab.js"></script>
-    <script src="../js/bootstrap-tooltip.js"></script>
-    <script src="../js/bootstrap-popover.js"></script>
-    <script src="../js/bootstrap-button.js"></script>
-    <script src="../js/bootstrap-collapse.js"></script>
-    <script src="../js/bootstrap-carousel.js"></script>
-    <script src="../js/bootstrap-typeahead.js"></script>
+    
 
   </body>
 </html>
