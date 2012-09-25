@@ -45,7 +45,9 @@ if (isset($_POST['btnLogin'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
+	<link rel="icon" 
+      type="image/png" 
+      href="favicon.ico" />
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <style>
@@ -109,7 +111,7 @@ if (isset($_POST['btnLogin'])){
       </footer>
     </div> 
     <script src="js/jquery-1.7.1.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
+    
     <script src="js/bootstrap-alert.js"></script>
     <script src="js/bootstrap-modal.js"></script>
     <script src="js/bootstrap-dropdown.js"></script>

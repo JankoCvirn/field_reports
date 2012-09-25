@@ -124,36 +124,11 @@ if (isset($_POST['SubmitChange'])){
 
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">eReports</a>
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> Loged as: <?php echo $username?>
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!--<li><a href="#">Profile</a></li>
-              <li class="divider"></li>
-              --><li><a href="main.php?logout=true">Sign Out</a></li>
-            </ul>
-          </div>
-          
-        </div>
-      </div>
-    </div>
+    <?php include 'nav/navigation2.php'?>
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-          <?php include 'nav/navigation.php'?>
-        </div><!--/span-->
+        
         <div class="span9">
          
           
@@ -304,7 +279,8 @@ if (isset($_POST['SubmitChange'])){
         <p>&copy; Ferndale Electric 2012,developed by Cvirn.com</p>
       </footer>
     </div> <!-- /container -->
-
+	</div>
+	</div>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -74,7 +74,7 @@ if (isset($_POST['SubmitReportCreate'])){
 	
 	if ($db_found) {
 	
-		$SQL = "SELECT * FROM apps_forms.report_material WHERE job_nr='".$job_number."' ORDER BY id ASC   ";
+		$SQL = "SELECT * FROM apps_forms.report_material2 WHERE job_nr='".$job_number."' ORDER BY id ASC   ";
 		$result = mysql_query($SQL);
 	
 		while ($db_row = mysql_fetch_assoc($result)) {
@@ -253,43 +253,7 @@ function publish(){
   
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">eReports</a>
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> Loged as: <?php echo $username?>
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!--<li><a href="#">Profile</a></li>
-              <li class="divider"></li>
-              --><li><a href="main.php?logout=true">Sign Out</a></li>
-            </ul>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <?php include '../nav/navigation.php'?>
-          
-        </div><!--/span-->
-        <div class="span9">
-<!--           <div class="hero-unit"> -->
-            
-<!--             <h2>Labor&Material Field Reports</h2> -->
-<!--               <p> </p> -->
-<!--               </div> -->
+    <?php include '../nav/navigation2.php'?>
 
 <div class="row-fluid"> 
             <div class="span9">
@@ -333,7 +297,7 @@ function publish(){
             <tr>
 	            <td>Job Location: <?php echo $o5['job_location'];?></td>
 	            <td></td>
-	            <td>CUSTOMER ORDER No.:<?php echo $o5['customer_order_no	'];?></td>
+	            <td>CUSTOMER ORDER No.:<?php echo $o5['customer_order_no'];?></td>
             
             </tr>
             <tr>
@@ -414,16 +378,31 @@ function publish(){
             <td><?php echo $o2['amount'];?></td>
             <td><?php echo $o2['name'];?></td>
             <td><?php echo $o2['rate'];?></td>
-            <td><?php echo $o2['per'];?></td>
-            <td><?php echo $o2['extension'];?></td>
+            <td>
+            <?php if ($o2['per']==0.001){
+            	
+            	echo 'M';
+            	
+                }
+                elseif ($o2['per']==0.01){
+                	echo 'C';
+                }
+                elseif ($o2['per']==1){
+                	echo 'E';
+                }
+                ;
+            
+            
+            ?></td>
+            <td><?php echo $o2['total'];?></td>
             </tr>
             
-            <?php $total_mat=$total_mat+$o2['total']?>
+            <?php $subtotal_mat=$subtotal_mat+$o2['total']?>
             <?php endforeach;?>
             <tr>
             <td colspan="4">SUBTOTAL MATERIAL
             </td>
-            <td><?php echo money_format('%i', $total_mat);?></td>
+            <td><?php echo money_format('%i', $subtotal_mat);?></td>
             </tr>
             </table>
             </td>
@@ -512,7 +491,7 @@ function publish(){
 		             <td>
 		              SALES TAX
 		             </td>
-		             <td><?php echo $o5['sales_tax'];?></td>
+		             <td><?php echo money_format('%i',(($subtotal_mat*$o5['sales_tax'])/100));?></td>
 		            
 		            </tr>
 		            <tr>
@@ -520,7 +499,7 @@ function publish(){
 		             <td>
 		              OVERHEAD&PROFIT
 		             </td>
-		             <td><?php echo money_format('%i',$o5['overhead_profit']);?></td>
+		             <td><?php echo money_format('%i',(($subtotal_mat*$o5['overhead_profit'])/100));?></td>
 		            
 		            </tr>
 		            
@@ -529,7 +508,7 @@ function publish(){
 		             <td>
 		              TOTAL MATERIAL
 		             </td>
-		             <td><?php echo money_format('%i',$total_mat);?></td>
+		             <td><?php echo money_format('%i',$subtotal_mat+($subtotal_mat*$o5['sales_tax'])/100+($subtotal_mat*$o5['overhead_profit'])/100);?></td>
 		            
 		            </tr>
 		            <tr>
@@ -562,7 +541,9 @@ function publish(){
 		             <td>
 		              TOTAL MATERIAL	
 		             </td>
-		             <td><?php echo money_format('%i',$total_mat);?></td>
+		             <td>
+		             <?php $total_mat=$subtotal_mat+($subtotal_mat*$o5['sales_tax'])/100+($subtotal_mat*$o5['overhead_profit'])/100;?>
+		             <?php echo money_format('%i',$total_mat);?></td>
 		            
 		            </tr>
 		            
@@ -645,14 +626,10 @@ function publish(){
 
       <hr>
 
-      <footer>
-        <p>&copy; Ferndale Electric 2012,developed by Cvirn.com</p>
-      </footer>
+      <?php include '../nav/footer.php';?>
     </div> <!-- /container -->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    
     
     
     

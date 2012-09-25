@@ -139,14 +139,7 @@ if (!session_is_registered($username)) {
         	        				
         	        				]}
         	        			);  
-
-        	
-
-        	
-        	
-        	  
-                
-            } );
+         } );
 
 		
 		$('#master_table tbody tr').live('click', function () {
@@ -276,43 +269,13 @@ if (!session_is_registered($username)) {
 
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">eReports</a>
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> Loged as: <?php echo $username?>
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <!--<li><a href="#">Profile</a></li>
-              <li class="divider"></li>
-              --><li><a href="main.php?logout=true">Sign Out</a></li>
-            </ul>
-          </div>
-          
-        </div>
-      </div>
-    </div>
+    <?php include 'nav/navigation2.php'?>
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="span3">
-          <?php include 'nav/navigation.php'?>
-          
-        </div><!--/span-->
+        
         <div class="span9">
-<!--           <div class="hero-unit"> -->
-            
-<!--             <h2>Labor&Material Field Reports</h2> -->
-<!--               <p> </p> -->
-<!--               </div> -->
+
 
 <div class="row-fluid"> 
             <div class="span9">
@@ -371,11 +334,11 @@ if (!session_is_registered($username)) {
 			<!--Inputs  -->
 			<tr><td>
 			<label for="sales_tax" style="color: blue;"> Sales TAX </label> <input
-				id="sales_tax" value="" type="text" name="sales_tax" />
+				id="sales_tax" value="0" type="text" name="sales_tax" />
 			</td>
 			<td>
 			<label for="overhead_profit" style="color: blue;">Overhead&Profit </label> <input
-				id="overhead_profit" value="" type="text" name="overhead_profit" />
+				id="overhead_profit" value="0" type="text" name="overhead_profit" />
 				</td>
 			</tr>
 			<!--Button  -->
@@ -539,12 +502,20 @@ if (!session_is_registered($username)) {
 				id="material_cost" value="" type="text" name="material_cost" />
 				</td>
 				<td>
-				<label for="material_per" style="color: blue;"> PER: </label> <input
-				id="material_per" value="" type="text" name="material_per" />
+				<label for="material_per" style="color: blue;"> PER: </label>
+				<select id="material_per" name="material_per">
+				 <option value="0.001">M</option>
+				 <option value="0.01">C</option>
+				 <option value="1">E</option>
+				 <option value="1">L</option>
+				
+				</select>
+				 <!-- <input
+				id="material_per" value="" type="text" name="material_per" /> -->
 				</td>
 				<td>
 				<label for="material_ext" style="color: blue;"> EXTENSION: </label> <input
-				id="material_ext" value="" type="text" name="material_ext" />
+				id="material_ext" value="" type="text" name="material_ext" disabled="disabled"/>
 				</td>
 				</tr>
 				<tr>
@@ -660,7 +631,7 @@ if (!session_is_registered($username)) {
 				</tbody>
 			</table>
 			<table>
-				<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
+				<form name="subEdit" action="<?php echo($PHP_SELF)?>" method="post" >
 				<tr><legend>Set SubContractor costs</legend>
 				</tr>
 				<tr>
