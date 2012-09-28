@@ -20,7 +20,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report Manager<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="../lrmmain.php">LM Field Report Creator</a></li>
+                  <li><a href="../lmr/lrmmain.php">LM Field Report Creator</a></li>
 	              <li><a href="../report_publisher/lrm_publisher.php">LM Field Report Publisher</a></li>
                 </ul>
               </li>

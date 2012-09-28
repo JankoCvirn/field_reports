@@ -15,6 +15,10 @@ if (isset($_REQUEST["logout"])){
 	session_unset();
 	session_destroy();
 }
+if (isset($_REQUEST["report_id"])){
+	
+	$_SESSION["report_id"]=$_REQUEST["report_id"];
+}
 //back to index.html
 if (!session_is_registered($username)) {
 	header("Location:../index.php");}
@@ -118,6 +122,8 @@ if (!session_is_registered($username)) {
 	src="../datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 
+		var jobnr=<?php echo $_SESSION['report_id'];?>
+        
         $(document).ready(function() {
         	$('#master_table').dataTable( {
         		"bProcessing": true,
@@ -699,3 +705,4 @@ if (!session_is_registered($username)) {
 
   </body>
 </html>
+

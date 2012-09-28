@@ -1,7 +1,7 @@
 <?php
 ini_set("session.gc_maxlifetime", "3600");
-require_once  ("..inc/utils.php");
-require '..inc/lmr_update.php';
+require_once  ("inc/utils.php");
+require 'inc/lmr_update.php';
 
 
 session_start();
@@ -17,7 +17,7 @@ if (isset($_REQUEST["logout"])){
 }
 //back to index.html
 if (!session_is_registered($username)) {
-	header("Location:../index.php");}
+	header("Location:index.php");}
 
 	/////////////////////////////////////
 	///Data update section
@@ -90,13 +90,13 @@ if (!session_is_registered($username)) {
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -105,17 +105,17 @@ if (!session_is_registered($username)) {
 
     <!-- Le fav and touch icons -->
 <!--    <link rel="shortcut icon" href="../assets/ico/favicon.ico">-->
-    <link rel="stylesheet" href="../datatables/media/css/demo_page.css">
-<link rel="stylesheet" href="../datatables/media/css/demo_table.css">
+    <link rel="stylesheet" href="datatables/media/css/demo_page.css">
+<link rel="stylesheet" href="datatables/media/css/demo_table.css">
 
 
-<script src="../js/jquery-1.7.1.min.js">
+<script src="js/jquery-1.7.1.min.js">
         </script>
-        <script src="../js/jquery.dataTables.columnFilter.js" type="text/javascript"></script>
+        <script src="js/jquery.dataTables.columnFilter.js" type="text/javascript"></script>
         
 
 <script type="text/javascript"
-	src="../datatables/media/js/jquery.dataTables.js"></script>
+	src="datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 
         $(document).ready(function() {
@@ -269,7 +269,7 @@ if (!session_is_registered($username)) {
 
   <body>
 
-    <?php include '../nav/navigation2.php'?>
+    <?php include 'nav/navigation2.php'?>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -685,17 +685,17 @@ if (!session_is_registered($username)) {
     <!-- Placed at the end of the document so the pages load faster -->
     
     
-    <script src="../js/bootstrap-alert.js"></script>
-    <script src="../js/bootstrap-modal.js"></script>
-    <script src="../js/bootstrap-dropdown.js"></script>
-    <script src="../js/bootstrap-scrollspy.js"></script>
-    <script src="../js/bootstrap-tab.js"></script>
-    <script src="../js/bootstrap-tooltip.js"></script>
-    <script src="../js/bootstrap-popover.js"></script>
-    <script src="../js/bootstrap-button.js"></script>
-    <script src="../js/bootstrap-collapse.js"></script>
-    <script src="../js/bootstrap-carousel.js"></script>
-    <script src="../js/bootstrap-typeahead.js"></script>
+    <script src="js/bootstrap-alert.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-button.js"></script>
+    <script src="js/bootstrap-collapse.js"></script>
+    <script src="js/bootstrap-carousel.js"></script>
+    <script src="js/bootstrap-typeahead.js"></script>
 
   </body>
 </html>
