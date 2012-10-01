@@ -82,8 +82,14 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 		$jobl=$_POST['jobl'];
 		$jobn=$_POST['jobn'];
 		$cust=$_POST['cust'];
-		$result=$objR->setNewLMR($custnr, $fec, $job, $dat, $work, $jobl, $jobn, $cust);
-		
+		$check=$objR->getCheck($custnr, $fec, $job, $dat, $work, $jobl, $jobn, $cust);
+		if (!$check){
+		    $result=$objR->setNewLMR($custnr, $fec, $job, $dat, $work, $jobl, $jobn, $cust);
+		}
+		else{
+			
+			$result=false;
+		}
 		
 		
 		
@@ -96,16 +102,26 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 		$ht=$_POST['ht'];
 		$dt=$_POST['dt'];
 		$jnr=$_POST['jobn'];
+		$check_l=$obj->getCheck($w, $st, $ht, $dt, $jnr);
+		if (!$check){
 		$result=$obj->setNewLabor($w, $st, $ht, $dt, $jnr);
-		
+		}
+		else{
+			$result=false;
+		}
 	}
 	else if ($action=='setLMRMat' && $allow==1){
 		$n=$_POST['n'];
 		$a=$_POST['a'];
 		$jnr=$_POST['jobn'];
 		$obj=new lmr_mat($uid);
+		$check=$obj->getCheck($n, $a, $jnr);
+		if (!$check){
 		$result=$obj->setMat($n, $a, $jnr);
-		
+		}
+		else{
+			$result=false;
+		}
 	}
 	
 	else if ($action=='setLMREqu' && $allow==1){
@@ -113,7 +129,13 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 		$a=$_POST['a'];
 		$jnr=$_POST['jobn'];
 		$obj=new lmr_equip($uid);
+		$check=$obj->getCheck($n, $a, $jnr);
+		if (!$check){
 		$result=$obj->setEquip($n, $a, $jnr);
+		}
+		else{
+			$result=false;
+		}
 		
 	}
 	else if ($action=='setLMRSub' && $allow==1){
@@ -121,8 +143,13 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 		$a=$_POST['a'];
 		$jnr=$_POST['jobn'];
 		$obj=new lmr_subcon($uid);
+		$check=$obj->getCheck($n, $a, $jnr);
+		if (!$check){
 		$result=$obj->setSubCon($n, $a, $jnr);
-		
+		}
+		else{
+			$result=false;
+		}
 		
 	}
 	

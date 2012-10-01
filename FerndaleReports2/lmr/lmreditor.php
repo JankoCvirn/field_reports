@@ -1,7 +1,7 @@
 <?php
 ini_set("session.gc_maxlifetime", "3600");
-require_once  ("..inc/utils.php");
-require '..inc/lmr_update.php';
+require_once  ("../inc/utils.php");
+require '../inc/lmr_update.php';
 
 
 session_start();
@@ -15,9 +15,10 @@ if (isset($_REQUEST["logout"])){
 	session_unset();
 	session_destroy();
 }
-if (isset($_REQUEST["report_id"])){
+if (isset($_REQUEST["report_jobn"])){
 	
-	$_SESSION["report_id"]=$_REQUEST["report_id"];
+	$_SESSION["report_jobnr"]=$_REQUEST["report_jobn"];
+
 }
 //back to index.html
 if (!session_is_registered($username)) {
@@ -73,22 +74,14 @@ if (!session_is_registered($username)) {
 		$oUpdater->setSub($id,$jobnr,$cost);
 	}
 	
-	if (isset($_POST["SubmitReportDetails"])){
-		
-		$oUpdater=new lmr_update('none');
-		$jobnr=$_POST['report_jobn'];
-		$tax=$_POST['sales_tax'];
-		$over=$_POST['overhead_profit'];
-		$oUpdater->setReport($jobnr, $tax, $over);
-		
-	}
+	
 	
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Labor&Material Field Report </title>
+    <title>Labor&Material Field Report Editor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -122,46 +115,22 @@ if (!session_is_registered($username)) {
 	src="../datatables/media/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 
-		var jobnr=<?php echo $_SESSION['report_id'];?>
+		
         
         $(document).ready(function() {
-        	$('#master_table').dataTable( {
-        		"bProcessing": true,
-        		"bServerSide": true,
-        		
-        		"sAjaxSource": "inc/data_source_flm_master.php",
-        		"aaSorting": [[ 4, "asc" ]],
-        		"bJQueryUI": true,
-                "bStateSave": true,
-                "bAutoWidth": false,
-                
-        		} 
-				
-
-
-        	).columnFilter({aoColumns:[
-        	           				{ sSelector: "#JobNumberFilter", type:"select"  },
-        	        				{ sSelector: "#CustomerNameFilter", type:"select" } 
-        	        				
-        	        				]}
-        	        			);  
-         } );
-
-		
-		$('#master_table tbody tr').live('click', function () {
+        	
 			
-            var nTds = $('td', this);
-            var jobnr = $(nTds[3]).text();
-            var dataString = 'job_nr='+jobnr;
+        	var jobnr='<?php echo $_SESSION['report_jobnr'];?>';
             
-            oFormObject = document.forms['reportEdit'];
-            oFormObject.elements["report_jobn"].value = jobnr;
+            
+            
+            
 
             $('#labor_table').dataTable( {
             	"bDestroy":true,
                 "bServerSide": true,
                 "bRegex":false,
-                "sAjaxSource": "inc/data_source_flm_labor.php",
+                "sAjaxSource": "../inc/data_source_flm_labor.php",
                 "oSearch": {"sSearch": jobnr}
                 
               } );
@@ -170,7 +139,7 @@ if (!session_is_registered($username)) {
             	"bDestroy":true,
                 "bServerSide": true,
                 "bRegex":false,
-                "sAjaxSource": "inc/data_source_flm_mat.php",
+                "sAjaxSource": "../inc/data_source_flm_mat.php",
                 "oSearch": {"sSearch": jobnr}
                 
               } );
@@ -178,7 +147,7 @@ if (!session_is_registered($username)) {
             	"bDestroy":true,
                 "bServerSide": true,
                 "bRegex":false,
-                "sAjaxSource": "inc/data_source_flm_equip.php",
+                "sAjaxSource": "../inc/data_source_flm_equip.php",
                 "oSearch": {"sSearch": jobnr}
                 
               } );
@@ -186,7 +155,7 @@ if (!session_is_registered($username)) {
             	"bDestroy":true,
                 "bServerSide": true,
                 "bRegex":false,
-                "sAjaxSource": "inc/data_source_flm_subcon.php",
+                "sAjaxSource": "../inc/data_source_flm_subcon.php",
                 "oSearch": {"sSearch": jobnr}
                 
               } );
@@ -285,77 +254,7 @@ if (!session_is_registered($username)) {
 
 <div class="row-fluid"> 
             <div class="span9">
-              <p><strong>REPORTS OVERVIEW:</strong></p>
-              <table id="master_table" class="display">
-				<thead>
-					<tr>
-						<th>SystemId</th>
-						<th>Customer </th>
-						<th>Job Date </th>
-						<th>Job Number </th>
-						<th>Job Name</th>
-						<th>Job Location</th>
-						
-						<th>Fec Manager</th>
-						<th>CustomerOrd.Nr.</th>
-						<th>Work performed</th>
-						<th>Work complete</th>
-						<th>Sales Tax</th>
-						<th>Overhead & Profit</th>
-						
-			
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						
-						
-						
-			
-					</tr>
-			
-				</tbody>
-			</table>
-			<table>
-			<form name="reportEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-			<tr><legend><span class="label label-info">Field Report Details Section for JobNumber:</span></legend>
-			</tr>
-			<tr><td>
-			<label for="report_jobn" style="color: blue;"> Job Number: </label>
-			<input id="report_jobn" value="" type="text" name="report_jobn" readonly="readonly"  />
-			</td>
-			</tr>
-			<!--Inputs  -->
-			<tr><td>
-			<label for="sales_tax" style="color: blue;"> Sales TAX </label> <input
-				id="sales_tax" value="0" type="text" name="sales_tax" />
-			</td>
-			<td>
-			<label for="overhead_profit" style="color: blue;">Overhead&Profit </label> <input
-				id="overhead_profit" value="0" type="text" name="overhead_profit" />
-				</td>
-			</tr>
-			<!--Button  -->
-			<tr><td>
-			<button type="submit" class="btn btn-success"  value="Submit"  name="SubmitReportDetails">Update Report</button>
-			</td>	
-			</tr>
-			
-			</form>
-			</table>
-			</br>
+             </br>
             </div><!--/span-->
             
           </div><!--/row-->
@@ -403,9 +302,9 @@ if (!session_is_registered($username)) {
 				</tbody>
 			</table>
             <p></p>
-            <table>
+            <table class="table">
             <form name="laborEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<legend>Set worker time rates</legend>
+				<tr><legend><td>Set worker time rates:</td></legend></tr>
 				
 				<tr>
 				<td><label for="labor_id" style="color: blue;"> LaborID: </label> 
@@ -484,9 +383,9 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-			<table>
+			<table class="table">
 			<form name="materialEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<tr><legend>Set material costs</legend>
+				<tr><legend><td>Set material costs</td></legend>
 				</tr>
 				<tr>
 				<td>
@@ -565,9 +464,9 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-			<table>
+			<table class="table">
 			<form name="eqpEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<tr><legend>Set equipment costs</legend></tr>
+				<tr><legend><td>Set equipment costs</td></legend></tr>
 				<tr>
 				<td>
 				<label for="eqp_id" style="color: blue;"> eqpID: </label> 
@@ -636,9 +535,9 @@ if (!session_is_registered($username)) {
 			
 				</tbody>
 			</table>
-			<table>
+			<table class="table">
 				<form name="subEdit" action="<?php echo($PHP_SELF)?>" method="post" >
-				<tr><legend>Set SubContractor costs</legend>
+				<tr><legend><td>Set SubContractor costs</td></legend>
 				</tr>
 				<tr>
 				<td>

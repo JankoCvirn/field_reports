@@ -571,7 +571,7 @@ function publish(){
             <td>
             <table>
             <tr><td>Customer Signature<td></tr>
-            <tr><img src="<?php echo "../signature/".$job_number.'Signature.jpg'?>" alt="Customer signature." width="304" height="228" ></tr>
+            <tr><img src="<?php echo "../signature/".$job_number.'Signature.jpg'?>" alt="Customer signature."  ></tr>
             </table>
             
             
