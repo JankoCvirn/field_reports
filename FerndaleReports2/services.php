@@ -12,11 +12,12 @@ require 'inc/lmr_subcon.php';
 
 if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 	
-	$uid='wservice';
+	//$uid='wservice';
 	
 	$un=$_REQUEST['username'];
 	$up=$_REQUEST['password'];
 	
+	$uid=$un;
 	$un=stripslashes($un);
 	$up=stripslashes($up);
 	
@@ -102,7 +103,7 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 		$ht=$_POST['ht'];
 		$dt=$_POST['dt'];
 		$jnr=$_POST['jobn'];
-		$check_l=$obj->getCheck($w, $st, $ht, $dt, $jnr);
+		$check=$obj->getCheck($w, $st, $ht, $dt, $jnr);
 		if (!$check){
 		$result=$obj->setNewLabor($w, $st, $ht, $dt, $jnr);
 		}
